@@ -63,7 +63,7 @@ Layout del circuito integrado
 
 ### Diagrama RTL de la calculadora
 
-![Diagrama RTL de la calculadora](images/calculator_rtl.png)
+![Diagrama RTL de la calculadora](images/calculator_clean.svg)
 
 ### Diagrama a nivel de compuertas del Full Adder
 
