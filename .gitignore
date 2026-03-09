@@ -1,0 +1,10 @@
+runs/
+*.log
+*.gds
+*.def
+*.lef
+*.spef
+*.vcd
+*.dot
+*.svg
+*.png
