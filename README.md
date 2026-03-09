@@ -59,3 +59,13 @@ Layout del circuito integrado
 * OpenLane – flujo de diseño ASIC
 * Sky130 – kit de proceso abierto (PDK)
 
+## Diagramas del diseño
+
+### Diagrama RTL de la calculadora
+
+![Diagrama RTL](images/calculator_rtl.svg)
+
+### Diagrama a nivel de compuertas del Full Adder
+
+![Full Adder Gate Level](images/full_adder_clean.svg)
+
