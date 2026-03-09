@@ -67,19 +67,33 @@ wave.vcd
 # Estructura del proyecto
 
 4bit-calculator-asic
+
 │
+
 ├── src
+
 │ ├── calculator.v
+
 │ ├── adder4.v
+
 │ └── subtractor4.v
+
 │
+
 ├── testbench
+
 │ ├── calculator_tb.v
+
 │ └── TestSimulation.pdf
+
 │
+
 ├── runs
+
 │ └── (archivos generados por OpenLane)
+
 │
+
 └── README.md
 
 
@@ -88,6 +102,7 @@ wave.vcd
 # Simulación
 
 La simulación se realiza utilizando **Icarus Verilog**.
+
 
 ### Compilar el diseño
 iverilog -o sim.vvp src/*.v testbench/calculator_tb.v
