@@ -1,71 +1,142 @@
-# Calculadora de 4 bits
+# 4-bit Calculator ASIC
 
-Este proyecto implementa una **calculadora digital de 4 bits** diseñada en **Verilog** y sintetizada utilizando el flujo de diseño ASIC **OpenLane** con el **PDK Sky130**.
+Este proyecto implementa una **calculadora de 4 bits en Verilog** capaz de realizar operaciones aritméticas básicas.  
+El diseño incluye un **testbench para simulación** y está preparado para integrarse en un flujo de diseño ASIC utilizando OpenLane.
 
-## Descripción
+El objetivo del proyecto es demostrar conceptos fundamentales de:
 
-El objetivo del proyecto es demostrar el flujo completo de diseño digital, desde la descripción en RTL hasta la generación del layout físico de un circuito integrado.
+- Diseño RTL en Verilog
+- Simulación mediante testbench
+- Visualización de señales
+- Flujo básico de diseño ASIC
 
-La calculadora utiliza una arquitectura basada en **sumadores completos (full adders)** para realizar operaciones aritméticas básicas sobre números de 4 bits.
+---
 
-## Características
+# Operaciones soportadas
 
-* Diseño en **Verilog HDL**
-* Operaciones aritméticas de 4 bits
-* Arquitectura basada en **Ripple Carry Adder**
-* Síntesis lógica usando **Yosys**
-* Flujo de diseño ASIC con **OpenLane**
-* Tecnología **Sky130**
+La calculadora recibe dos operandos de 4 bits (`A` y `B`) y un selector de operación (`OP`).
 
-## Estructura del proyecto
+| OP | Operación |
+|----|-----------|
+| 00 | Suma |
+| 01 | Resta |
+| 10 | Multiplicación |
+| 11 | División |
 
-```
-calculator4bit
+Salida principal:
+
+- `RESULT[7:0]` → resultado de la operación
+
+La suma incluye el **bit de acarreo (carry)**.
+
+Para la división se incluye una **protección contra división por cero**, retornando `0` si `B = 0`.
+
+---
+
+# Arquitectura del diseño
+
+El módulo principal `calculator` utiliza:
+
+- `adder4` → suma de 4 bits
+- `subtractor4` → resta de 4 bits
+- operador `*` → multiplicación
+- operador `/` → división
+
+La selección de operación se realiza mediante una estructura `case(OP)`.
+
+---
+
+# Testbench
+
+El testbench realiza pruebas automáticas para múltiples combinaciones de entrada.
+
+Se recorren:
+
+- 4 operaciones (`OP`)
+- valores de `A` de `0` a `9`
+- valores de `B` de `0` a `9`
+
+Esto permite verificar el comportamiento del diseño en diferentes escenarios.
+
+Durante la simulación se genera el archivo de ondas:
+wave.vcd
+
+
+---
+
+# Estructura del proyecto
+
+4bit-calculator-asic
 │
 ├── src
-│   ├── calculator.v
-│   ├── adder4.v
-│   ├── subtractor4.v
-│   └── full_adder.v
+│ ├── calculator.v
+│ ├── adder4.v
+│ └── subtractor4.v
 │
-├── diagrams
-│   ├── full_adder_clean.svg
-│   └── calculator_rtl.svg
+├── testbench
+│ ├── calculator_tb.v
+│ └── TestSimulation.pdf
+│
+├── runs
+│ └── (archivos generados por OpenLane)
 │
 └── README.md
-```
 
-## Flujo de diseño
 
-El flujo seguido en este proyecto es el siguiente:
+---
 
-```
-Verilog (RTL)
-   ↓
-Síntesis lógica (Yosys)
-   ↓
-Diagrama RTL
-   ↓
-Diagrama a nivel de compuertas
-   ↓
-Implementación física con OpenLane
-   ↓
-Layout del circuito integrado
-```
+# Simulación
 
-## Herramientas utilizadas
+La simulación se realiza utilizando **Icarus Verilog**.
 
-* Yosys – síntesis lógica
-* OpenLane – flujo de diseño ASIC
-* Sky130 – kit de proceso abierto (PDK)
+### Compilar el diseño
+iverilog -o sim.vvp src/*.v testbench/calculator_tb.v
 
-## Diagramas del diseño
+### Ejecutar la simulación
+vvp sim.vvp
 
-### Diagrama RTL de la calculadora
+Esto generará el archivo:
+wave.vcd
 
-![Diagrama RTL de la calculadora](images/calculator_clean.svg)
 
-### Diagrama a nivel de compuertas del Full Adder
+### Visualizar las señales
+gtkwave wave.vcd
 
-![Diagrama gate level del full adder](images/full_adder_clean.png)
 
+---
+
+# Resultado de la simulación
+
+La captura de las señales obtenidas durante la simulación puede consultarse en:
+testbench/TestSimulation.pdf
+
+
+Este archivo contiene el resultado visual del testbench ejecutado en GTKWave.
+
+---
+
+# Flujo ASIC
+
+El proyecto está preparado para ejecutarse dentro del flujo **OpenLane**, que permite automatizar las siguientes etapas del diseño ASIC:
+
+- síntesis lógica
+- placement
+- routing
+- generación del layout del chip
+
+---
+
+# Herramientas utilizadas
+
+- Verilog HDL
+- OpenLane
+- Icarus Verilog
+- GTKWave
+
+---
+
+# Autor
+
+Jacobo Ramírez
+
+Proyecto educativo de diseño digital orientado a ASIC.
